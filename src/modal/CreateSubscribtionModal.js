@@ -32,7 +32,7 @@ import {
 } from "react-moralis";
 import { toast } from "react-toastify";
 import Grid from "@material-ui/core/Grid";
-import { Web3Storage } from "web3.storage";
+// import { Web3Storage } from "Daoguru_logo.png";
 import { ethers } from "ethers";
 
 const Input = styled("input")({
@@ -125,7 +125,7 @@ function CreateSubscribtionModal(props) {
   }
 
   function makeStorageClient() {
-    return new Web3Storage({ token: getAccessToken() });
+    // return new Web3Storage({ token: getAccessToken() });
   }
 
   function makeFileObjects(data) {
@@ -159,8 +159,8 @@ function CreateSubscribtionModal(props) {
   }
 
   async function storage(files, formData) {
-    const client = makeStorageClient();
-    const cid = await client.put(files);
+    // const client = makeStorageClient();
+    // const cid = await client.put(files);
 
     subscribtion.set("title", formData.title);
     subscribtion.set("productorservice", formData.productorservice);
@@ -171,10 +171,10 @@ function CreateSubscribtionModal(props) {
     subscribtion.set("threemonthPrice", formData.threemonthPrice);
     subscribtion.set("sixmonthPrice", formData.sixmonthPrice);
     subscribtion.set("twelvemonthPrice", formData.twelvemonthPrice);
-    subscribtion.set(
-      "storageURI",
-      `https://${cid}.ipfs.dweb.link/subscribtion_Details.json`
-    );
+    // subscribtion.set(
+    //   "storageURI",
+    //   `https://${cid}.ipfs.dweb.link/subscribtion_Details.json`
+    // );
     subscribtion.set("username", user?.attributes?.username);
     subscribtion.set("ethAddress", user?.attributes?.ethAddress);
     subscribtion.set(

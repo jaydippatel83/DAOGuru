@@ -28,7 +28,7 @@ import { styled } from "@mui/material/styles";
 import { useMoralis } from "react-moralis";
 import { toast } from "react-toastify";
 import Grid from "@material-ui/core/Grid";
-import { Web3Storage } from "web3.storage";
+// import { Web3Storage } from "web3.storage";
 import {
   chainLinkPriceFeed,
   RandomNumberGeneratorContract,
@@ -156,7 +156,7 @@ function CreateInvoiceModal(props) {
   }
 
   function makeStorageClient() {
-    return new Web3Storage({ token: getAccessToken() });
+    // return new Web3Storage({ token: getAccessToken() });
   }
 
   function makeFileObjects(data) {
@@ -174,8 +174,8 @@ function CreateInvoiceModal(props) {
   } 
 
   async function storage(files, formData) {
-    const client = makeStorageClient();
-    const cid = await client.put(files);
+    // const client = makeStorageClient();
+    // const cid = await client.put(files);
     invoice.set("invoiceNumber", formData.invoiceNumber);
     invoice.set("created", formData.created);
     invoice.set("dueDate", formData.dueDate);
@@ -189,10 +189,10 @@ function CreateInvoiceModal(props) {
     invoice.set("taxName", formData.taxName);
     invoice.set("taxPercentage", formData.taxPercentage);
     invoice.set("note", formData.note);
-    invoice.set(
-      "storageURI",
-      `https://${cid}.ipfs.dweb.link/Invoice_Details.json`
-    );
+    // invoice.set(
+    //   "storageURI",
+    //   `https://${cid}.ipfs.dweb.link/Invoice_Details.json`
+    // );
     invoice.set("username", user?.attributes.username);
     invoice.set("ethAddress", user?.attributes.ethAddress);
     invoice.set(
