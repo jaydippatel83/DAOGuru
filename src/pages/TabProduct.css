@@ -1,0 +1,112 @@
+*,
+::before,
+::after {
+  /* box-sizing: border-box; */
+  margin: 0;
+  padding: 0;
+  /* margin-top: -10px; */
+}
+
+body {
+  background: #fff;
+}
+
+ 
+.bloc-tabs {
+  display: flex;
+}
+.tabs {
+  padding: 15px;
+  text-align: center;
+  width: 50%;
+  background: #D82148;
+  cursor: pointer;
+  border-bottom: 1px solid #D82148;
+  box-sizing: content-box;
+  position: relative;
+  outline: none;
+}
+.tabs:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.active-tabs {
+  background: rgb(195, 193, 193);
+  border-bottom: 1px solid transparent;
+}
+
+.active-tabs::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 2px);
+  height: 5px;
+  background: #D82148;
+}
+
+button {
+  border: none;
+}
+.content-tabs {
+  flex-grow: 1;
+}
+.content {
+  background: white;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.content h2 {
+  padding: 0px 0 5px 0px;
+}
+.content hr {
+  width: 100px;
+  height: 2px;
+  background: #222;
+  margin-bottom: 5px;
+}
+.content p {
+  width: 100%;
+  height: 100%;
+}
+.active-content {
+  display: block;
+}
+
+button.ReactTags__remove{
+  margin-left: 10px;
+  background: transparent;
+}
+
+span.tag-wrapper.ReactTags__tag{
+  opacity: 1;
+  cursor: move;
+  padding: 10px;
+  background: azure;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+input.ReactTags__tagInputField{
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+

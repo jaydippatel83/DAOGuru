@@ -1,0 +1,21 @@
+.css-1byr0tz { 
+    background: #F2F3F6 !important; 
+}
+
+button.ReactTags__remove{
+    margin-left: 10px;
+    background: transparent;
+}
+
+span.tag-wrapper.ReactTags__tag{
+    opacity: 1;
+    cursor: move;
+    padding: 10px;
+    background: azure;
+    border-radius: 4px;
+    margin: 10px;
+}
+
+
+
+
