@@ -19,6 +19,7 @@ import { fCurrency } from "../../utils/formatNumber";
 import Label from "../../components/Label";
 import ColorPreview from "../../components/ColorPreview";
 import ProductDetail from "./ProductDetail";
+import moment from "moment";
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +73,7 @@ export default function HiringCard({ product,users }) {
            Created by: {user.slice(0,10)}
           </Typography>
           <Typography color="textPrimary" gutterBottom variant="body">
-           {createdAt}
+           {moment(createdAt).format("MMMM Do YYYY")}
           </Typography>
           </Box>
         </Box>

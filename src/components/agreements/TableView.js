@@ -67,7 +67,7 @@ function TableView(props) {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell align="center"># </TableCell>
+            <TableCell align="left"># </TableCell>
             <TableCell>Title</TableCell>
             <TableCell>Buyer</TableCell>
             <TableCell>Seller</TableCell>

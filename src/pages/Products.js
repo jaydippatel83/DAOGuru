@@ -92,36 +92,23 @@ export default function EcommerceShop() {
         setLoading={setLoading}
         currentUser={user}
       /> 
-      <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
-        </Typography>
+      <Container> 
         <Stack
           direction="row"
-          flexWrap="wrap-reverse"
           alignItems="center"
-          justifyContent="flex-end"
-          sx={{ mb: 5 }}
-          spacing={2}
+          justifyContent="space-between"
+          mb={5}
         >
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              formik={formik}
-              isOpenFilter={openFilter}
-              onResetFilter={handleResetFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
-            <Button
+          <Typography variant="h4" gutterBottom>
+          Products
+          </Typography>
+          <Button
               variant="contained"
               onClick={handleClickOpen} 
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
               Create Products
-            </Button>
-          </Stack>  
-          
+            </Button> 
         </Stack>
         {/* <h1>Disha</h1> */}
         <TabsComponent

@@ -147,33 +147,10 @@ function Agreement() {
           >
             Create Agreement
           </Button>
-        </Stack>
+        </Stack> 
 
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="end">
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-required-label">
-              Status
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-required-label"
-              id="demo-simple-select-required"
-              value={status}
-              label="Status"
-              onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="progress">In Progress</MenuItem>
-              <MenuItem value="cancelled">Cancelled</MenuItem>
-            </Select>
-          </FormControl>
-        </Stack>
-
-        <Stack>
-          <Card>
-            {/* <AgreementView currentAccount={address} /> */}
+        <Stack sx={{marginTop:'30px'}}>
+          <Card> 
             <TableView currentAccount={address} />
           </Card>
         </Stack>

@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMoralisCloudFunction } from "react-moralis";
 import { styled } from "@mui/material/styles";
+import moment from "moment";
 
 const ProductImgStyle = styled("img")({
   top: 0,
@@ -67,7 +68,7 @@ function Landingproduct() {
                         Created by: {e.user.username}
                       </Typography>
                       <Typography color="textPrimary" gutterBottom variant="body">
-                        {e.createdAt}
+                      {moment(e.createdAt).format("MMMM Do YYYY")}
                       </Typography>
                     </Box>
                   </Box>
