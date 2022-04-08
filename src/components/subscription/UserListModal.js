@@ -61,7 +61,7 @@ function UserListModal(props) {
           fullWidth={true}
           maxWidth="lg"
         >
-          <DialogTitle>
+          <DialogTitle style={{background:'#dc3545',color:'white'}}>
             Subscriber List
             <IconButton
               aria-label="close"
@@ -70,10 +70,10 @@ function UserListModal(props) {
                 position: "absolute",
                 right: 8,
                 top: 8,
-                color: "error",
+                color: "white",
               }}
             >
-              <CloseIcon />
+              <CloseIcon  />
             </IconButton>
           </DialogTitle>
           <Divider />

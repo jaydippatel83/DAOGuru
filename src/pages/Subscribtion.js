@@ -30,6 +30,8 @@ import OutgoingStream from "src/components/subscription/outgoinStream";
 import OutgoingTab from "../components/subscription/tabs/outgoingTab";
 import IncomingTab from "../components/subscription/tabs/incomingTab";
 import TableSubView from "src/components/subscription/table/TableView";
+import { flowDetails } from "src/superfluid";
+import { ethers } from "ethers";
 
 
 function TabPanel(props) {
@@ -77,7 +79,7 @@ function Subscription() {
   const web3Context = React.useContext(Web3Context);
   const { connectWallet, web3Auth, address } = web3Context;
   const supweb3Context = React.useContext(SuperfluidWeb3Context);
-  const { listOutFlows, totalStreams } = supweb3Context;
+  const { listOutFlows, totalStreams ,getUSDCXBalance} = supweb3Context;
 
   const [status, setStatus] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -128,7 +130,7 @@ function Subscription() {
   
   useEffect(() => {
     fetch();
-  }, [isUpdated, user]);
+  }, [isUpdated, user]); 
 
   return (
     <Page title="Subscriptions |  Trustified Network">
@@ -159,14 +161,14 @@ function Subscription() {
             Create Subscibtion
           </Button>
         </Stack>
-        <Stack
+        {/* <Stack
           direction="row"
           alignItems="flex-end"
           justifyContent="flex-end"
           mb={2}
         >
           <Button variant="outlined">${totalStreams} Total Streams</Button>
-        </Stack>
+        </Stack> */}
 
          
         <Grid container spacing={3} sx={{marginBottom:'20px'}}>

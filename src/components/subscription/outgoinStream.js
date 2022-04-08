@@ -10,8 +10,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   textAlign: 'center',
   padding: theme.spacing(5, 0),
-  color: theme.palette.primary.main ,
-  background: alpha(theme.palette.error.main, 0.1)
+  color: theme.palette.primary.main  
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -36,14 +35,13 @@ const TOTAL = 1352831;
 
 export default function OutgoingStream() {
   return (
-    <RootStyle>
-      <IconWrapperStyle>
-        <Iconify icon="icon-park-outline:income-one" data-flip="horizontal" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3"  color="#000">{fShortenNumber(20)}</Typography>
-      <Typography variant="subtitle2" color="#000" sx={{ opacity: 0.72 }}>
-         Outgoing Streams
+    <RootStyle> 
+      <Typography variant="body" color="#000" sx={{fontWeight:'bold' }}>
+      Outgoing Streams
       </Typography>
+      <Typography variant="h3" color="#000">
+        {/* <AnimatedBalance value={balance} rate={netFlow}/>  */} 0.343435
+      </Typography> 
     </RootStyle>
   );
 }

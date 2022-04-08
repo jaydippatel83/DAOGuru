@@ -55,7 +55,7 @@ export default function AppBugReports() {
 
 
 
-  const [balance, setBalance] = useState();
+  const [balance, setBalance] = useState(0);
   const [netFlow, setNetFlow] = useState(0);
   const [childrenLoading, setChildrenLoading] = useState(false);
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -69,66 +69,9 @@ export default function AppBugReports() {
   const updateNetFlow = async () => {
     const result = await flowDetails(user?.attributes?.ethAddress);
     setNetFlow(parseFloat(ethers.utils.formatEther(result.cfa.netFlow)));
-  };
-
-  // const balanceTimestampMs = useMemo(
-  //   () => flow && ethers.BigNumber.from(flow?.updatedAtTimestamp).mul(1000),
-  //   [flow]
-  // );
-
-  // useEffect(() => {
-  //   if (flow !== undefined) {
-  //     const flowRateBigNumber =
-  //       flow && ethers.BigNumber.from(flow?.currentFlowRate);
-  //     if (flowRateBigNumber && flowRateBigNumber.isZero()) {
-  //       return; // No need to show animation when flow rate is zero.
-  //     }
-
-  //     const balanceBigNumber = ethers.BigNumber.from(
-  //       flow && flow?.streamedUntilUpdatedAt
-  //     );
-
-  //     let stopAnimation = false;
-  //     let lastAnimationTimestamp = 0;
-
-  //     const animationStep = (currentAnimationTimestamp) => {
-  //       if (stopAnimation) {
-  //         return;
-  //       }
-
-  //       if (
-  //         currentAnimationTimestamp - lastAnimationTimestamp >
-  //         ANIMATION_MINIMUM_STEP_TIME
-  //       ) {
-  //         const currentTimestampBigNumber = ethers.BigNumber.from(
-  //           new Date().valueOf() // Milliseconds elapsed since UTC epoch, disregards timezone.
-  //         );
-
-  //         setWeiValue(
-  //           balanceBigNumber.add(
-  //             currentTimestampBigNumber
-  //               .sub(balanceTimestampMs)
-  //               .mul(flowRateBigNumber)
-  //               .div(1000)
-  //           )
-  //         );
-
-  //         lastAnimationTimestamp = currentAnimationTimestamp;
-  //       }
-
-  //       window.requestAnimationFrame(animationStep);
-  //     };
-
-  //     window.requestAnimationFrame(animationStep);
-
-  //     return () => {
-  //       stopAnimation = true;
-  //     };
-  //   }
-  // }, [flow]);
-
+  }; 
   useEffect(() => {
-    listOutFlows();
+    // listOutFlows();
 
     const id = setInterval(() => {
       updateBalance();
@@ -136,9 +79,8 @@ export default function AppBugReports() {
     updateBalance(); 
     updateNetFlow();
     return () => clearInterval(id);
-  },[provider]);
-
-  console.log(balance,"fluid balance");
+  },[provider]); 
+  
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -146,7 +88,7 @@ export default function AppBugReports() {
       </IconWrapperStyle>
       <Typography variant="h3" color="#000">
         <AnimatedBalance value={balance} rate={netFlow}/>
-        {weiValue && ethers.utils.formatEther(weiValue).slice(0,10)}
+        {/* {weiValue && ethers.utils.formatEther(weiValue).slice(0,10)} */}
       </Typography>
       <Typography variant="subtitle2" color="#000" sx={{ opacity: 0.72 }}>
         Total Streams

@@ -18,7 +18,7 @@ const AnimatedBalance = ({
       clearInterval(id);
     };
   }, [value, rate]);
-  return <p>{valueShow}</p>;
+  return <p className="m-0 p-0">{valueShow.toFixed(decimalPlaces)} <span style={{color:'green',fontSize:'10px',fontWeight:'bold'}}>USDCx</span></p>;
 };
 
 export default AnimatedBalance;

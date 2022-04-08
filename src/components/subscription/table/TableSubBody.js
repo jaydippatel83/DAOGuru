@@ -48,6 +48,7 @@ function TableSubBody(props) {
   async function setData() {
     setLoading(true);
     const subscribtionsdata = await JSON.parse(JSON.stringify(data)); 
+    console.log(subscribtionsdata,"subscribtionsdata");
     const s =
       data &&
       subscribtionsdata.filter(

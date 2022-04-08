@@ -65,16 +65,16 @@ function TableView(props) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
-        <TableHead>
+        <TableHead style={{background:'#dc3545',color:'white'}}>
           <TableRow>
-            <TableCell align="left"># </TableCell>
-            <TableCell>Title</TableCell>
-            <TableCell>Buyer</TableCell>
-            <TableCell>Seller</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Explore</TableCell>
+            <TableCell style={{color:'white'}} align="left"># </TableCell>
+            <TableCell style={{color:'white'}}>Title</TableCell>
+            <TableCell style={{color:'white'}}>Buyer</TableCell>
+            <TableCell style={{color:'white'}}>Seller</TableCell>
+            <TableCell style={{color:'white'}}>Status</TableCell>
+            <TableCell style={{color:'white'}}>Explore</TableCell>
           </TableRow>
-        </TableHead>
+        </TableHead> 
         {isLoading && (
           <TableRow>
             <TableCell colSpan={6} sx={{ textAlign: "center" }}>

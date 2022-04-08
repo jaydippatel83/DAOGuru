@@ -31,6 +31,8 @@ import { networks } from "src/redux/networks";
 
 import { GetSenderStream } from "../../context/GetSenderStreamContex";
 import { SuperfluidWeb3Context } from "src/context/SuperfluidContext";
+import { flowDetails } from "src/superfluid";
+import AnimatedBalance from "src/superfluid/AnimateBalance";
 
 export const url = `https://polygon-mumbai.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_KEY}`;
 export const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
@@ -44,77 +46,47 @@ function GetSubscriberStream(props) {
   const navigate = useNavigate();
 
   const supweb3Context = React.useContext(SuperfluidWeb3Context);
-  const { outgoingFlows, getSubAddress, subTotal, subflow } = supweb3Context;
+  const {  getSubAddress,getUSDCXBalance } = supweb3Context;
 
-  const [weiValue, setWeiValue] = useState(subflow?.streamedUntilUpdatedAt);
+
+  console.log(props,"props");
+
+  
 
   useEffect(async () => {
     getSubAddress(props.data.subscriberAddress); 
   }, [props]);
 
-  const balanceTimestampMs = useMemo(
-    () => subflow && ethers.BigNumber.from(subflow?.updatedAtTimestamp).mul(1000),
-    [subflow]
-  );
 
+  const [balance, setBalance] = useState(0);
+  const [netFlow, setNetFlow] = useState(0);
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const FETCH_BALANCE_INTERVAL = 25000;
+
+  const updateBalance = () => {
+    getUSDCXBalance(provider, props.data.subscriberAddress).then((value) => {
+      setBalance(parseFloat(value));
+    });
+  };
+
+  const updateNetFlow = async () => {
+    const result = await flowDetails(props.data.subscriberAddress);
+    setNetFlow(parseFloat(ethers.utils.formatEther(result.cfa.netFlow)));
+  };
   useEffect(() => {
-    if (subflow !== undefined) {
-      const flowRateBigNumber =
-      subflow && ethers.BigNumber.from(subflow?.currentFlowRate);
-      if (flowRateBigNumber && flowRateBigNumber.isZero()) {
-        return; // No need to show animation when flow rate is zero.
-      }
-
-      const balanceBigNumber = ethers.BigNumber.from(
-        subflow && subflow?.streamedUntilUpdatedAt
-      );
-
-      let stopAnimation = false;
-      let lastAnimationTimestamp = 0;
-
-      const animationStep = (currentAnimationTimestamp) => {
-        if (stopAnimation) {
-          return;
-        }
-
-        if (
-          currentAnimationTimestamp - lastAnimationTimestamp >
-          ANIMATION_MINIMUM_STEP_TIME
-        ) {
-          const currentTimestampBigNumber = ethers.BigNumber.from(
-            new Date().valueOf() // Milliseconds elapsed since UTC epoch, disregards timezone.
-          );
-
-          setWeiValue(
-            balanceBigNumber.add(
-              currentTimestampBigNumber
-                .sub(balanceTimestampMs)
-                .mul(flowRateBigNumber)
-                .div(1000)
-            )
-          );
-
-          lastAnimationTimestamp = currentAnimationTimestamp;
-        }
-
-        window.requestAnimationFrame(animationStep);
-      };
-
-      window.requestAnimationFrame(animationStep);
-
-      return () => {
-        stopAnimation = true;
-      };
-    }
-  }, [subflow]);
-
-  useEffect(() => {
-    outgoingFlows();
-  });
+    const id = setInterval(() => {
+      updateBalance();
+    }, FETCH_BALANCE_INTERVAL);
+    updateBalance();
+    updateNetFlow();
+    return () => clearInterval(id);
+  },[provider]); 
 
   
+  
 
-  if(weiValue !== undefined){
+  if(balance !== undefined){
     return (
       <TableRow>
         <TableCell>
@@ -133,7 +105,7 @@ function GetSubscriberStream(props) {
         </TableCell>
   
         <TableCell>{props.data?.subscriberAddress?.slice(0, 10)}</TableCell>
-        <TableCell>{weiValue ? ethers.utils.formatEther(weiValue).slice(0,10): <CircularProgress/>} USDCx</TableCell>
+        <TableCell><AnimatedBalance value={balance} rate={netFlow}/></TableCell>
   
         <TableCell>
           {moment(props.data.createdAt).format("MMMM Do YYYY")}

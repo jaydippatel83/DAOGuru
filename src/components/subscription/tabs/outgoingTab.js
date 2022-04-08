@@ -60,16 +60,16 @@ function OutgoingTab() {
  
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
+      <Table aria-label="collapsible table"> 
+        <TableHead style={{background:'#dc3545',color:'white'}} > 
           <TableRow>
-                <TableCell ># </TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell>Subscriptions</TableCell>
-                <TableCell>Outgoing Streams</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Actions</TableCell>
-                <TableCell>Explore</TableCell>
+                <TableCell style={{color:'white'}} ># </TableCell>
+                <TableCell style={{color:'white'}} >Title</TableCell>
+                <TableCell style={{color:'white'}} >Subscribers</TableCell>
+                <TableCell style={{color:'white'}} >Outgoing Streams</TableCell>
+                <TableCell style={{color:'white'}} >Status</TableCell>
+                <TableCell style={{color:'white'}} >Actions</TableCell>
+                <TableCell style={{color:'white'}} >Explore</TableCell>
           </TableRow>
         </TableHead>
         {/* {isLoading && (

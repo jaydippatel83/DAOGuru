@@ -45,6 +45,7 @@ function TableSubView() {
   async function setData() {
     setLoading(true);
     const subscribtionsdata = await JSON.parse(JSON.stringify(data));
+    console.log(subscribtionsdata,"subscribtionsdata");
     const s =
       data &&
       subscribtionsdata.filter(
@@ -62,15 +63,15 @@ function TableSubView() {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
-        <TableHead>
+        <TableHead style={{background:'#dc3545',color:'white'}} > 
           <TableRow>
-                <TableCell ># </TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell>Subscribers</TableCell>
-                <TableCell>Incomming Streams</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Actions</TableCell>
-                <TableCell>Explore</TableCell>
+                <TableCell style={{color:'white'}} ># </TableCell>
+                <TableCell style={{color:'white'}} >Title</TableCell>
+                <TableCell style={{color:'white'}} >Subscribers</TableCell>
+                <TableCell style={{color:'white'}} >Incomming Streams</TableCell>
+                <TableCell style={{color:'white'}} >Status</TableCell>
+                <TableCell style={{color:'white'}} >Actions</TableCell>
+                <TableCell style={{color:'white'}} >Explore</TableCell>
           </TableRow>
         </TableHead>
         {isLoading && (

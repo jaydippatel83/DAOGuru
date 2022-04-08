@@ -149,16 +149,15 @@ function Invoices() {
           <Card>
             <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Invoice Number</TableCell>
-                    <TableCell>Due Date</TableCell>
-                    <TableCell>Customer Name</TableCell>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Token</TableCell>
-                    <TableCell>Note</TableCell>
-
-                    <TableCell>Explore</TableCell>
+              <TableHead style={{background:'#dc3545',color:'white'}}>
+          <TableRow> 
+                    <TableCell  style={{color:'white'}}>Invoice Number</TableCell>
+                    <TableCell  style={{color:'white'}}>Due Date</TableCell>
+                    <TableCell  style={{color:'white'}}>Customer Name</TableCell>
+                    <TableCell  style={{color:'white'}}>Price</TableCell>
+                    <TableCell  style={{color:'white'}}>Token</TableCell>
+                    <TableCell  style={{color:'white'}}>Note</TableCell> 
+                    <TableCell  style={{color:'white'}}>Explore</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
