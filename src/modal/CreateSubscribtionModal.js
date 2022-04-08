@@ -146,8 +146,8 @@ function CreateSubscribtionModal(props) {
     setUploading(true);
     const file = e.target.files[0];
     try {
-      const fileIpfs = await saveFile("trustified", file, { saveIPFS: true });
-      const moralisFile = new Moralis.File("trustified_subscribtion", file);
+      const fileIpfs = await saveFile("gaoguru", file, { saveIPFS: true });
+      const moralisFile = new Moralis.File("gaoguru_subscribtion", file);
 
       setFileUrl(fileIpfs);
       toast.success("Image uploaded Successfully!!");
