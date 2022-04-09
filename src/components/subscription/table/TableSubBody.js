@@ -32,10 +32,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useMoralis, useMoralisCloudFunction } from "react-moralis";
 import UserListModal from "../UserListModal";
+import { SuperfluidWeb3Context } from "../../../context/SuperfluidContext";
+import { flowDetails } from "src/superfluid"; 
+import { ethers } from "ethers";
+import AnimatedBalance from "src/superfluid/AnimateBalance";
+
+
 
 function TableSubBody(props) {
   const navigate = useNavigate();
   const {user} = useMoralis();
+  const supweb3Context = React.useContext(SuperfluidWeb3Context);  
+  const {  getUSDCXBalance } = supweb3Context;
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -43,7 +51,7 @@ function TableSubBody(props) {
   const { fetch, data, error, isLoading } = useMoralisCloudFunction(
     "getSubscribers",
     { autoFetch: true }
-  );
+  ); 
 
   async function setData() {
     setLoading(true);
@@ -58,14 +66,40 @@ function TableSubBody(props) {
     setLoading(false);
   }
 
+  const [balance, setBalance] = useState(0);
+  const [netFlow, setNetFlow] = useState(0);
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const FETCH_BALANCE_INTERVAL = 25000;
+
+  const updateBalance = () => {
+    getUSDCXBalance(provider, user?.attributes?.ethAddress).then((value) => {
+      setBalance(parseFloat(value));
+    });
+  };
+
+  const updateNetFlow = async () => {
+    const result = await flowDetails(user?.attributes?.ethAddress);
+    setNetFlow(parseFloat(ethers.utils.formatEther(result.cfa.netFlow)));
+  };
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      updateBalance();
+    }, FETCH_BALANCE_INTERVAL);
+    updateBalance();
+    updateNetFlow();
+    return () => clearInterval(id);
+  },[provider]); 
+
+
   useEffect(()=>{
     setData(); 
   },[data,isLoading]);
 
   useEffect(()=>{
     fetch();
-  },[])
- 
+  },[]) 
  
   return (
     <TableBody>
@@ -86,7 +120,7 @@ function TableSubBody(props) {
         <span className="ml-2">  {props.subs.title}</span>
         </TableCell>
         <TableCell> 10</TableCell>
-        <TableCell>0.03452 USDCx</TableCell>
+        <TableCell> <AnimatedBalance value={balance} rate={netFlow}/> </TableCell>
         <TableCell>
           <Label variant="ghost" color="success">
             Active

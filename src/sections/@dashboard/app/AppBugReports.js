@@ -51,7 +51,7 @@ export default function AppBugReports() {
   const {user} = useMoralis();
   const supweb3Context = React.useContext(SuperfluidWeb3Context);
   const { listOutFlows, totalStreams, flow, getUSDCXBalance } = supweb3Context;
-  const [weiValue, setWeiValue] = useState(flow?.streamedUntilUpdatedAt);
+  // const [weiValue, setWeiValue] = useState(flow?.streamedUntilUpdatedAt);
 
 
 

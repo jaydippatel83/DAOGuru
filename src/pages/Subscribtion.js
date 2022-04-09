@@ -112,7 +112,7 @@ function Subscription() {
   }, [data, isUpdated, user]);
 
   useEffect(() => {
-    listOutFlows();
+    // listOutFlows();
   });
 
   async function setData() {
