@@ -84,7 +84,7 @@ export default function UserProfile() {
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
-    <Page title="User Profile | Trustified Network">
+    <Page title="User Profile | DAOGuru">
       <Box
         component="main"
         sx={{

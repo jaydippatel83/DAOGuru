@@ -16,6 +16,13 @@ span.tag-wrapper.ReactTags__tag{
     margin: 10px;
 }
 
+button.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButtonBase-root.sw-button.dark.medium.css-1rh7pae{
+    background: #D82148;
+    border-radius: 10px;
+    margin: 0 10px;
+    border: none;
+}
+
 
 
 

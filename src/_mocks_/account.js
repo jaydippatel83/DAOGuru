@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Jaydip Patel',
-  email: 'jaydip@gmail.com',
+  displayName: '',
+  email: '',
   photoURL: '/static/mock-images/avatars/avatar_default.jpg'
 };
 

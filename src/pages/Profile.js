@@ -171,7 +171,7 @@ export default function Profile() {
     setValue(newValue);
   };
   return (
-    <RootStyle title="Profile | Trustified Network">
+    <RootStyle title="Profile | DAOGuru">
       <Box
         component="main"
         sx={{

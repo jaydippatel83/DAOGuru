@@ -19,13 +19,14 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Iconify from "src/components/Iconify";
 import { Web3Context } from "src/context/Web3Context";
-import { factoryAbi, factoryAddress } from "src/contracts/contract";
+import { daoToken, factoryAbi, factoryAddress } from "src/contracts/contract";
 import CreateInvoiceModal from "src/modal/CreateInvoiceModal";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import Page from "../components/Page";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import axios from "axios";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,6 +87,67 @@ function Invoices() {
   const [isUpdated, setIsUpdated] = useState([]);
   const [invoices, setInvoices] = useState([]);
 
+
+  const [ddata, setDData] = useState([]);
+  const [tokenid, setTokenid] = useState([]);
+  const [uriData, setUriData] = useState([]);
+  const [meta, setMeta] = useState([]); 
+
+
+  const covalent = Moralis.Plugins.covalent;
+
+  async function getInvoiceData() { 
+      const ids = [...tokenid];
+      const result = await covalent.getNftTokenIdForContract({
+          chainId: 80001,
+          contractAddress: daoToken,
+      })
+      const dd = result.data.items && result.data.items.map(async (e) => {
+          ids.push(e.token_id);
+      })
+      setTokenid(ids);
+  }
+
+  useEffect(() => {
+      Moralis.initPlugins();
+      getInvoiceData();
+  }, []);
+
+  useEffect(async () => {
+      const getUri = [...ddata];
+      const tokenUriData = [...uriData];
+      const metadata = [...meta];
+
+      for (let index = 0; index < tokenid.length; index++) {
+          const element = tokenid[index];
+          const res = await covalent.getNftExternalMetadataForContract({
+              chainId: 80001,
+              contractAddress: daoToken,
+              tokenId: element,
+          })
+          getUri.push(res.data);
+      }
+      setDData(getUri);
+
+      for (let index = 0; index < getUri.length; index++) {
+          const element = getUri[index];
+          console.log(element,"element");
+          tokenUriData.push(element.items[0].nft_data[0].token_url);
+      }
+
+      for (let index = 0; index < tokenUriData.length; index++) {
+          const element = tokenUriData[index]; 
+          var newStr = element.replace("http://10.128.0.18", "https://ipfs.moralis.io:2053");
+          const dd = await axios.get(newStr); 
+          metadata.push(dd.data);
+      }
+      setMeta(metadata);
+  }, [tokenid]);
+
+
+
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -114,10 +176,10 @@ function Invoices() {
 
   useEffect(() => {
     fetch();
-  }, [isUpdated, user]);
+  }, [isUpdated, user,meta]);
 
   return (
-    <Page title="Agreement |  Trustified Network">
+    <Page title="Agreement |  DAOGuru">
       <CreateInvoiceModal
         open={handleClickOpen}
         close={handleClose}
@@ -161,15 +223,17 @@ function Invoices() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {invoices && invoices.length == 0 && (
+                  {meta && meta.length == 0 && (
                     <TableRow>
                       <TableCell colSpan={7} sx={{ textAlign: "center" }}>
                         <h5>No invoices created yet!</h5>
                       </TableCell>
                     </TableRow>
                   )}
-                  {invoices &&
-                    invoices.map((invoice) => (
+                  {meta &&
+                    meta.map((invoice) => {
+                      console.log(invoice,"invoice");
+                      return  ( 
                       <TableRow>
                         <TableCell>{invoice.invoiceNumber}</TableCell>
                         <TableCell>{invoice.dueDate}</TableCell>
@@ -183,9 +247,9 @@ function Invoices() {
                             size="large"
                             //   type="submit"
                             variant="contained"
-                            to={`/invoice/${invoice.objectId}`}
+                            to={`/invoice/${invoice.invoiceNumber}`}
                             onClick={() => {
-                              navigate(`/invoice/${invoice.objectId}`, {
+                              navigate(`/invoice/${invoice.invoiceNumber}`, {
                                 state: invoice,
                               });
                             }}
@@ -194,7 +258,8 @@ function Invoices() {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    ))}
+                    
+                    )})}
                 </TableBody>
               </Table>
             </TableContainer>

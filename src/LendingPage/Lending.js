@@ -62,7 +62,19 @@ export default function Lending() {
         <div className="row">
           <div className="col-10 mx-auto mt-5">
             <p className="peragraph">
-            Decentralized Business Enabler and Growth Platform for {" "}
+            Decentralized <span
+                style={{
+                  color: " #D82148",
+                }}
+              >
+                Business
+              </span>{" "} Enabler and  <span
+                style={{
+                  color: " #D82148",
+                }}
+              >
+                Growth
+              </span>{" "} Platform for {" "}
               <span
                 style={{
                   color: " #D82148",

@@ -118,7 +118,7 @@ function HiringPage() {
   };
 
   return (
-    <Page title="Subscriptions |  Trustified Network">
+    <Page title="Subscriptions |  DAOGuru">
       <CreateHiringModal
         open={handlOpenHiring}
         close={handleCloseHiring}

@@ -30,12 +30,16 @@ import { toast } from "react-toastify";
 import Grid from "@material-ui/core/Grid";
 // import { Web3Storage } from "web3.storage";
 import {
-  chainLinkPriceFeed,
+  chainLinkPriceFeed, 
+  invoiceContractAdd,
+  daoToken,
   RandomNumberGeneratorContract,
 } from "../contracts/contract";
 import chainlinkABI from "../abi/chinlinkPrice.json";
 import { ethers } from "ethers";
 import chainlinkVRFABI from "../abi/chainlinkVRF.json";
+import invoiceABI from "../abi/Invoice.json";
+import daoABI from "../abi/DaoToken.json";
 
 const Input = styled("input")({
   display: "none",
@@ -54,6 +58,7 @@ function CreateInvoiceModal(props) {
   window.ethereum.enable();
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
+
   const priceFeed = new ethers.Contract(
     chainLinkPriceFeed,
     chainlinkABI,
@@ -129,8 +134,8 @@ function CreateInvoiceModal(props) {
           taxPercentage: values.taxPercentage,
           note: values.note,
         };
-        const files = makeFileObjects(formData);
-        await storage(files, formData);
+        // const files = makeFileObjects(formData);
+        await storage(formData);
         props.setIsUpdated(!props.isUpdated);
         resetForm();
         setLoading(false);
@@ -173,9 +178,27 @@ function CreateInvoiceModal(props) {
     return files;
   } 
 
-  async function storage(files, formData) {
-    // const client = makeStorageClient();
-    // const cid = await client.put(files);
+  async function storage(formData) {  
+    const file = new Moralis.File("data.json", { base64: btoa(JSON.stringify(formData)) });
+    const dataUri = await file.saveIPFS();
+    const uri = dataUri._ipfs; 
+
+    window.ethereum.enable(); 
+    const provider = new ethers.providers.Web3Provider(window.ethereum); 
+    const signer = provider.getSigner(); 
+    let contract = new ethers.Contract(daoToken, daoABI, signer); 
+    let transaction = await contract.createToken(uri); 
+    let tx = await transaction.wait();
+    let event = tx.events[0];
+    let value = event.args[2];
+    let tokenId = value.toNumber();
+
+    contract = new ethers.Contract(invoiceContractAdd, invoiceABI, signer);
+    transaction = await contract.createInvoice(uri, tokenId);
+    await transaction.wait();  
+
+    invoice.set("uri", uri);
+    invoice.set("tokenId", tokenId); 
     invoice.set("invoiceNumber", formData.invoiceNumber);
     invoice.set("created", formData.created);
     invoice.set("dueDate", formData.dueDate);
@@ -188,11 +211,7 @@ function CreateInvoiceModal(props) {
     invoice.set("address", formData.address);
     invoice.set("taxName", formData.taxName);
     invoice.set("taxPercentage", formData.taxPercentage);
-    invoice.set("note", formData.note);
-    // invoice.set(
-    //   "storageURI",
-    //   `https://${cid}.ipfs.dweb.link/Invoice_Details.json`
-    // );
+    invoice.set("note", formData.note); 
     invoice.set("username", user?.attributes.username);
     invoice.set("ethAddress", user?.attributes.ethAddress);
     invoice.set(

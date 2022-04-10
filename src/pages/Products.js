@@ -82,7 +82,7 @@ export default function EcommerceShop() {
     resetForm();
   };
   return (
-    <Page title="Products | Trustified Network">
+    <Page title="Products | DAOGuru">
       <CreateProductModal
         open={handleClickOpen}
         close={handleClose}

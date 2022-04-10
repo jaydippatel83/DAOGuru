@@ -133,7 +133,7 @@ function Subscription() {
   }, [isUpdated, user]); 
 
   return (
-    <Page title="Subscriptions |  Trustified Network">
+    <Page title="Subscriptions |  DAOGuru">
       <CreateSubscribtionModal
         open={handleClickOpen}
         close={handleClose}

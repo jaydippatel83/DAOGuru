@@ -9,15 +9,21 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar"; 
 import Container from "@mui/material/Container"; 
 import AccountPopover from "src/layouts/dashboard/AccountPopover";
+import { InitSwAuth } from "@skill-wallet/auth";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+const skillWallet=process.env.REACT_APP_SKILL_WALLET;
 
 export default function LendingHeader() {
   const navigate = useNavigate();
   const { authenticate, user, isAuthenticated } = useMoralis(); 
  
-  useEffect(() => {}, [user]); 
+  useEffect(() => {
+    InitSwAuth();
+  }, [user]); 
+
 
   const agreement = () => {
     if (isAuthenticated && user) {
@@ -33,7 +39,7 @@ export default function LendingHeader() {
         <Toolbar disableGutters>
           <Logo />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
-          <Box sx={{ flexGrow: 0 }}> 
+          <Box sx={{ flexGrow: 0,display:'flex',justifyContent:'flex-end' }}> 
             <Button
               onClick={agreement}
               variant="outlined"
@@ -41,6 +47,11 @@ export default function LendingHeader() {
             >
             Dashboard
             </Button>
+
+            <sw-auth  
+              partner-key={skillWallet}
+              use-dev="true" 
+            ></sw-auth>
 
             {user == null ? (
               <Button

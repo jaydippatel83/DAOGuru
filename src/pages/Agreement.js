@@ -120,7 +120,7 @@ function Agreement() {
   };
 
   return (
-    <Page title="Agreement |  Trustified Network">
+    <Page title="Agreement |  DAOGuru">
       <CreateAgreementModal
         submitForm={createAgreement}
         open={handleClickOpen}

@@ -44,7 +44,7 @@ export default function InvoiceDetail() {
   async function setInvoiceDetails() {
     const invoices = await JSON.parse(JSON.stringify(data));
     const invoice =
-      data && invoices.filter((inv) => inv.objectId == params?.id);
+      data && invoices.filter((inv) => inv.invoiceNumber == params?.id);
     invoice && setInvoice(invoice[0]);
   }
  
@@ -69,6 +69,7 @@ export default function InvoiceDetail() {
   }
   const handlePayNow=async(invc)=>{  
     const amt= invc && invc.price * invc.quantity + gst;
+    console.log(amt,"amount");
     const address = invc?.address; 
       await Moralis.enableWeb3();
       const options = {

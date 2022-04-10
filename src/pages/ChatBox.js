@@ -176,7 +176,7 @@ function ChatBox() {
   };
  
   return (
-    <Page title="Chat | Trustified Network">
+    <Page title="Chat | DAOGuru">
       <Container maxWidth="xl">
         <Box sx={{ pb: 2 }}>
           <Typography variant="h4" component="h2">Messages</Typography>
