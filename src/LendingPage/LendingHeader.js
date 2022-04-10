@@ -22,9 +22,8 @@ export default function LendingHeader() {
  
   useEffect(() => {
     InitSwAuth();
-  }, [user]); 
-
-
+  }, [user]);  
+  
   const agreement = () => {
     if (isAuthenticated && user) {
       navigate("/dashboard/Agreement");
